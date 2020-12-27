@@ -138,8 +138,9 @@ $(document).ready(function(){
                 },  
                 success: function(textStatus, status, data) {
                     console.log(data);
-                    // location.reload();
                     console.log('success');
+                    location.reload();
+
 
                 },
                 failure: function(errMsg) {
@@ -153,5 +154,10 @@ $(document).ready(function(){
             }
         )}
     });
+
+    function sleep(milliseconds, func){
+        setTimeout(()=> {
+        },milliseconds)
+    }
 // EOF
 });

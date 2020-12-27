@@ -7,7 +7,7 @@
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
     require_once('artist.php');
-    require_once('./utility/sanitizer.php');
+    require_once('../utility/sanitizer.php');
     $artist = new Artist();
 
     $data = json_decode(file_get_contents("php://input"));

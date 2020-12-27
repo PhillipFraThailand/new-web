@@ -1,8 +1,10 @@
 <?php
     session_start();
+    // $_SESSION['userId'] = 'hans';
 ?>
 
 <h1>index.php</h1>
+
 <?php
     // if session is set show header and body
     if ( isset($_SESSION['userId']) ) {
@@ -21,16 +23,24 @@
 
             default:
             echo('default body');
+            
+            echo('<pre>');
+            print_r($_SESSION);
+            echo('</pre>');
+
             break;
         }
     // if not logged in
     } else {
 ?>
+
 <h1>landing page</h1>
 <?php
-print_r($_SESSION);
-        // require_once('./api/landingPage.php');
-        require_once('landingPage.php');
-    }
+    require_once('landingPage.php');
+    print_r($_SESSION);
+    echo('<pre>');
+    print_r($GLOBALS);
+    echo('</pre>');
+}
 ?>
 

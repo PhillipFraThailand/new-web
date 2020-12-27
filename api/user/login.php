@@ -1,4 +1,6 @@
 <?php
+    session_start();
+
     // set headers (might not be needed but i got some weird errors at some point with insomnia(postman))
     header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json; charset=UTF-8");
@@ -22,6 +24,7 @@
         if($result) {
             http_response_code(200);
             // echo $result;
+            $_SESSION['test'] = "testing";
             print_r(json_encode($_SESSION));
             // print_r($_SESSION);
         } else {
