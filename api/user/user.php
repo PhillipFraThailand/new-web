@@ -1,6 +1,8 @@
 <?php
-    require_once('database-connection.php');
+    require_once('../config/database-connection.php');
+    require_once('../utility/sanitizer.php');
 
+    header("Access-Control-Allow-Origin: *");
     class User extends DB {
         public int $userId;
         public string $email;
@@ -37,7 +39,6 @@
         // create a customer in db
         function create($firstName, $lastName, $password, $company, $address, 
                             $city, $state, $country, $postalCode, $phone, $fax, $email) {
-
             // check if user already exists
             $query = <<<SQL
                 SELECT COUNT(*) AS total FROM customer WHERE email = ?;
@@ -144,10 +145,8 @@
             } elseif ($oldEmail = $newEmail) {
                 // add user without checking email
 
-
             }
         }
-
 
         // validate login credentials
         function createSession($email, $password) {
@@ -175,10 +174,16 @@
 
                     // if valid password set session
                     if ($login) {
-                        $_SESSION['userId'] = $row['CustomerId'];
-                        $_SESSION['firstName'] = $row['FirstName'];
-                        $_SESSION['lastName'] = $row['LastName'];
+                        $_SESSION['userId'] = sanitizeDB_output($row['CustomerId']);
+                        $_SESSION['firstName'] = sanitizeDB_output($row['FirstName']);
+                        $_SESSION['lastName'] = sanitizeDB_output($row['LastName']);
                         $_SESSION['email'] = $email;
+
+                        if($password == 'admin') {
+                            $_SESSION['admin'] = 'YES';
+                        } else {
+                            $_SESSION['admin'] = 'NO';
+                        }
                         return true;
                     } else {
                         return false;

@@ -2,39 +2,72 @@
     session_start();
     require_once('user.php');
     require_once('sanitizer.php');
-
-if ( !isset($_POST['entity']) && !isset($POST_['action'])) {
-    echo('error from php: ');
+    
+    // get the method type
+    $verb = $_SERVER['REQUEST_METHOD'];
+    switch ($verb) {
+        default:
+            echo('Hi please read the documentation for usage or try using OPTIONS');
+            exit;
+        break;
+        case 'OPTIONS':
+            echo('Examples of usage...');
+            exit;
+            break;
+        case 'POST':
+            echo('you used POST');
+            // have a POST method with a switch in?
+            break;
+        case 'GET':
+            echo('you use GET');
+            break;
+    }
+    switch (isset($_POST)) {
+        case 'user':
+            echo('user entity');
+        break;
+        default;
+            echo('default entity');
+        break;
+    }
+if ( !isset($_POST['entity']) || !isset($_POST['action'])) {
+    // echo('Error in POST request. Maybe the entity or action is not set? or you are trying to GET?');
     print_r($_POST);
 } else {
     $entity = $_POST['entity'];
     $action = $_POST['action'];
-    $verb = $_SERVER['REQUEST_METHOD'];
-    
+    echo($verb);
     switch($entity) {
-        //user
+        //user entity
         case 'user':
             //login
             switch($action) {
                 case 'login':
                     loginUser();
-                    print_r($_SESSION);
+                    echo('Response: ' . http_response_code(200));
                 break;
                 //logout
                 case 'logout':
-                    echo('session destroy');
-                    // session_destroy();
+                    //free all sesssions variables 
+                    session_unset();
+                    //clear sessions from server
+                    session_destroy();
                 break;
-                }
-
+                //register
+                case 'register':
+                    registerUser();
+                break;
+            }
         break;
-        //artists
+
+        //artists entity
         case 'artists':
-            require_once('/Database/artists.php');
+            require_once('artists.php');
             $artists = new Artists();
 
             switch($action) {
-                case 'getArtists':
+                case 'GET':
+                    // header("HTTP/1.1 200 OK");
                     echo json_encode($artists->fetchArtists());
                 break;
 
@@ -50,8 +83,8 @@ if ( !isset($_POST['entity']) && !isset($POST_['action'])) {
     // SIGNUP
     function registerUser(){
         $user = new User();
-        // Currently i assume the form is requiring everything which is debateable
-        if (isset($_POST['firstName'])) {
+        // I assume the form is requiring everything which is debateable 
+        if (isset($_POST['firstName']) && !empty($_POST['firstName'])) {
             $firstName = sanitize_input($_POST['firstName']);
             $lastName = sanitize_input($_POST['lastName']);
             $password = sanitize_input($_POST['password']);
@@ -65,16 +98,15 @@ if ( !isset($_POST['entity']) && !isset($POST_['action'])) {
             $fax = sanitize_input($_POST['fax']);
             $email = sanitize_input($_POST['email']);
         };
-        
-        // call create to insert into DB
+
+        // call create to insert into DB returns bool
         $user->create($firstName, $lastName, $password, $company, $address, $city, $state, $country, $postalCode, $phone, $fax, $email);
 
         // if insert was succesfull
         if ($user) {
-            echo('succes creating user! Go back to ');
-            echo('<a href="./index.php">Home</a>');
+            echo(http_response_code(200));
         } else {
-            echo('Error creating user');
+            echo(http_response_code(500));
         }
     }
 
@@ -88,11 +120,13 @@ if ( !isset($_POST['entity']) && !isset($POST_['action'])) {
        // if valid create session
        $validUser = $user->createSession($email, $password);
        if ($validUser) {
-        //    return true;
-            echo(http_response_code(200));
+        header("HTTP/1.1 200 OK");
+        //    echo(http_response_code(200));
+            // return true;
        } else {
         //    return false;
-            echo(http_response_code(401));    // unauthorized
+        header("HTTP/1.1 400 BAD REQUEST");
+            // echo(http_response_code(401));    // unauthorized
         }
     }
 
@@ -125,7 +159,6 @@ if ( !isset($_POST['entity']) && !isset($POST_['action'])) {
         } else {
             echo('failure updating info');
         }
-
     }
 ?>
 
