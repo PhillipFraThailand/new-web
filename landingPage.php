@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="modal-body">
-                <form> <!--- form to make required word --->
+                <form> <!--- form to make required work --->
                     <!-- Input fields -->
                     <div class="form-group">
                         <input id="firstNameInp" type="text" class="form-control" placeholder="First name" name="firstName" required="required">
@@ -106,7 +106,7 @@
                     </div>
 
                     <div class="form-group">
-                        <input id="register-button" type="submit" class="btn btn-primary btn-block btn-lg" value="Register"></input>
+                        <input id="register-button" class="btn btn-primary btn-block btn-lg" value="Register"></input>
                     </div>
                     </form>
                 </div> <!--- modal body end--->

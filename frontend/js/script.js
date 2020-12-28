@@ -40,15 +40,12 @@ $(document).ready(function(){
 
 // SIGN UP
     $("#signup-button").click(function() {
-        console.log('signup click');
-        // $("$signup-modal").modal('show');
         $("$signup-modal").show();
     });
     
 // REGISTER
     $("#register-button").click(function() {
-        var entity = "user";
-        var action = "register"
+        signupURL = './api/user/create.php';
 
         var firstName = $("#firstNameInp").val().trim();
         var lastName = $("#lastNameInp").val().trim();
@@ -63,12 +60,12 @@ $(document).ready(function(){
         var fax = $("#faxInp").val().trim();
         var email = $("#emailInp").val().trim();
 
+        console.log(firstName);
+
         $.ajax({
-            url:URL,
+            url:signupURL,
             type:'POST',
             data: {
-                entity:entity,
-                action: action,
                 firstName: firstName,
                 lastName: lastName,
                 password: password,
@@ -83,26 +80,26 @@ $(document).ready(function(){
                 email: email
             }, success: function(data) {
                 console.log(data);
+            }, failure: function(e) {
+                console.log('failure: ' + e);
+            }, error: function(e) {
+                console.log('error: ' + e);
+                console.log(JSON.stringify(e));
             }
         })
     });
 
-// logout
+// sign-out
     $("#signout-nav").click(function(){
-        var entity = "user";
-        var action = "logout";
-        console.log('FE: logout button', action, entity);
-    
+        console.log('logout button');
+        signoutURL = "./api/user/logout.php";
         $.ajax({
-            url:URL,
+            url:signoutURL,
             type:'POST',
-            data:{
-            entity:entity,
-            action:action 
-            },
-            success: function(data) {
+
+            success: function(a,b,data) {
                 console.log('success logging out');
-                console.log('FE: ',data);
+
                 setTimeout(function(){
                     location.reload();
                 }, 1000);
@@ -110,6 +107,13 @@ $(document).ready(function(){
             failure: function(errMsg) {
                 console.log(errMsg);
                 console.log('error logging out');
+            },
+            error: function(e) {
+                console.log('error');
+                console.log(e);
+                setTimeout(function(){
+                    location.reload();
+                }, 1000);
             }
         })
     });
@@ -140,8 +144,6 @@ $(document).ready(function(){
                     console.log(data);
                     console.log('success');
                     location.reload();
-
-
                 },
                 failure: function(errMsg) {
                     console.log('failure');
@@ -150,7 +152,7 @@ $(document).ready(function(){
                 error: function(e) {
                     console.log('error');
                     console.log(e);
-                  },
+                },
             }
         )}
     });

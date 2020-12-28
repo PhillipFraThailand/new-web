@@ -11,7 +11,6 @@
     require_once('user.php');
     require_once('../utility/sanitizer.php');
 
-    
     // POST: contentType:"application/x-www-form-urlencoded; charset=UTF-8"
     if ( isset($_POST['email']) && isset($_POST['password']) ) {
         
@@ -23,19 +22,17 @@
 
         if($result) {
             http_response_code(200);
-            // echo $result;
-            $_SESSION['test'] = "testing";
             print_r(json_encode($_SESSION));
-            // print_r($_SESSION);
         } else {
             http_response_code(400);
             echo $result;
         }
     } else {
         http_response_code(400);
-        echo('no work');
+        echo('Please provide a email and a password');
     }
 
+// saving this in case
 // php:input: contentType: "application/json"
     // $data = json_decode(file_get_contents("php://input"));
     // header('Content-Type: application/json');
