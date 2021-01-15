@@ -29,7 +29,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="navbar-nav mr-auto" id="navbarSupportedContent">
 
-                <button type="submit" class="btn btn-light">Home</button>
+                <button id="home-nav" type="submit" class="btn btn-light">Home</button>
 
                 <button id="artists-nav" type="submit" class="btn btn-light">Artists</button>
 

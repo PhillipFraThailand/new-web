@@ -1,4 +1,6 @@
 <?php
+session_start();
+
     // set headers (might not be needed but i got some weird errors at some point with insomnia(postman))
     header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json; charset=UTF-8");
@@ -16,11 +18,17 @@
     if (isset($_GET['id'])) {
         $id = sanitize_input($_GET['id']);
 
-        $result = $artist->getArtistById($id);
 
+        $result = $artist->getArtistById($id);
+        
+        if ($_session['admin'] = 'YES') {
+            $result['admin'] = 'YES';
+        } else {
+            $result['admin'] = 'NO';
+        }
         if ($result) {
-            echo($result);
-            http_response_code(201);
+                echo($result);
+                http_response_code(201);
         } else {
             http_response_code(400);
             echo('Are you sure the id exist?');

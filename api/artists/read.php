@@ -1,15 +1,16 @@
 <?php 
-    // set headers (might not be needed but i got some weird errors at some point with insomnia(postman))
+    session_start();
     header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json; charset=UTF-8");
 
-    // create the artist model
     include_once('artist.php');
+
     $artist = new Artist();
+    
+    $result['data'] = $artist->getArtists();
 
-    $result = $artist->getArtists();
+    $result['admin'] = $_SESSION['admin'];
+    
+    print_r(json_encode($result));
 
-    echo(json_encode($result));
-
-    //should add some if result <= 0 then say error
 ?>

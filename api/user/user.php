@@ -39,38 +39,33 @@
         // create a customer in db
         function create($firstName, $lastName, $password, $company, $address, 
                             $city, $state, $country, $postalCode, $phone, $fax, $email) {
-            // check if user already exists
+            // check if email exist
             $query = <<<SQL
                 SELECT COUNT(*) AS total FROM customer WHERE email = ?;
             SQL;
 
-            //  prepare the statement
+            //  prepare
             $stmt = $this->pdo->prepare($query);
             
-            //if the query to db was a success check the result
+            // run statement
             if ( $stmt->execute([$email]) ) {
-
-                // if the email exist we fail
+                // if exist fail
                 if($stmt->fetch()['total'] > 0) {
                     return false;
 
-                // if the email does not exist continue
+                // if no email found continue
                 } else {
-
-                    // hash the password
                     $password = password_hash($password, PASSWORD_DEFAULT);
 
-                    // create the query
+                    // query
                     $query = <<<SQL
                         INSERT INTO customer (FirstName, LastName, Password, Company, Address, City, 
                                 State, Country, PostalCode, Phone, Fax, Email) VALUES(?,?,?,?,?,?,?,?,?,?,?,?);
                         SQL;
-                        
                     // Prepare the statement
                     $stmt = $this->pdo->prepare($query);
                 }
             }
-
             // If the execution is a success
             if($stmt->execute([$firstName, $lastName, $password, $company, $address, $city, $state, $country, $postalCode, $phone, $fax, $email])) {
                 $this->disconnect();
@@ -159,13 +154,12 @@
             // Create prepared statement
             $stmt = $this->pdo->prepare($query);
     
-            //if the query was a success
+            // If the query was a success
             if ( $stmt->execute([$email]) ) {
                 // check if the result was empty, if then stop
                 if($stmt->rowCount() === 0) {
                     $this->disconnect();
                     return false;
-                    
                 // if result was not empty try to validate and create the session
                 } else {
                     // get result & validate password
@@ -179,10 +173,10 @@
                         $_SESSION['lastName'] = sanitizeDB_output($row['LastName']);
                         $_SESSION['email'] = $email;
 
-                        if($password == 'admin') {
-                            $_SESSION['admin'] = 'YES';
-                        } else {
+                        if($password !== 'admin') {
                             $_SESSION['admin'] = 'NO';
+                        } else {
+                            $_SESSION['admin'] = 'YES';
                         }
                         return true;
                     } else {

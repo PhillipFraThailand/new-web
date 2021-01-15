@@ -6,19 +6,20 @@
     header("Access-Control-Max-Age: 3600");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-    // create the artist model
     include_once('artist.php');
+    require_once('../utility/sanitizer.php');
+
     $artist = new Artist();
 
-    // $_POST[''] only works if i use // contentType: "application/json"
     $data = json_decode(file_get_contents("php://input"));
 
     if (isset($data->name)) {
-        $name = $data->name;
+        $name = sanitize_input($data->name);
 
-        $status = $artist->createArtist($name);
-        if ($status) {
-            http_response_code(202);
+        $result = $artist->createArtist($name);
+
+        if ($result) {
+            http_response_code(204);
         } else {
             http_response_code(500);
         }

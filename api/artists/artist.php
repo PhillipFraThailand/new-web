@@ -72,9 +72,9 @@
             QUERY;
 
             $stmt = $this->pdo->prepare($query);
-            $stmt->execute([$name]);
+            $result = $stmt->execute([$name]);
 
-            if ($stmt) {
+            if ($result) {
                 return true;
             } else {
                 return false;
@@ -100,7 +100,6 @@
             } else {
                 return true;
             }
-
             $stmt = null;
         }
 
