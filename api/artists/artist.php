@@ -1,5 +1,4 @@
 <?php
-    // require_once('database-connection.php');
     require_once('../config/database-connection.php');
     require_once('../utility/sanitizer.php');
 
@@ -7,17 +6,8 @@
     class Artist extends DB {
 
         // get artists
-        function getArtists() {
+        function getArtists($offset, $limit) {
             $results = array();
-            $limit = 25;
-
-            // Pagination if cookie and check if 0 or negative.
-            if (isset($_GET['page']) && ($_GET['page'] > 0)) {
-                $page = (int)$_GET['page'];
-                $offset = ($page * $limit -1);
-            } else {
-                $offset = 0;
-            };
 
             // Query
             $query = <<<QUERY
@@ -33,11 +23,9 @@
                 $results[] = $row; 
             }
 
-            // Close connection
+            // close connection
             $stmt = null;
-            
             // return results 
-            // return(json_encode($data));
             return($results);
         }
 

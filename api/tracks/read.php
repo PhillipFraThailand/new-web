@@ -3,10 +3,10 @@
     header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json; charset=UTF-8");
 
-    require_once('artist.php');
+    require_once('track.php');
     require_once('../utility/sanitizer.php');
 
-    $artist = new Artist();
+    $track = new Track();
     
     $limit = 25;
 
@@ -17,7 +17,7 @@
         $offset = 0;
     };
 
-    $result['data'] = $artist->getArtists($offset,$limit);
+    $result['data'] = $track->getTracks($offset,$limit);
 
     // because we cant set admin using insomnia..
     if (isset($_SESSION['admin'])) {

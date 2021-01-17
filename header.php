@@ -6,10 +6,18 @@
         <!-- Styles -->
         <link rel="stylesheet" href="frontend/css/bootstrap.min.css">
         <link rel="stylesheet" href="frontend/css/custom.css">
+
         <!-- Scripts -->
+        <!-- global js var -->
+        <script> var products = []; </script>
         <script defer src="frontend/js/jquery-3.5.1.js"></script>
         <script defer src="frontend/js/bootstrap.js"></script>
+        <script defer src="frontend/js/loginscripts.js"></script>
+        <script defer src="frontend/js/artistsScripts.js"></script>
+        <script defer src="frontend/js/tracksScripts.js"></script>
+        <script defer src="frontend/js/cartScripts.js"></script>
         <script defer src="frontend/js/script.js"></script>
+
         <title>Track Provider</title>
     </head>
 
@@ -44,7 +52,7 @@
                 <button id="signout-nav" type="submit" class="btn btn-light">Sign out</button>
 
             </div>
-                <form action=""> <!-- Has to be here for the layout -->
+                <form action=""> <!-- This forms allows me to use form-control class -->
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 </form>
                 <button class="btn bg-light my-2 my-sm-0" type="submit">Search</button>

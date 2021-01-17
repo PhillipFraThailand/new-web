@@ -6,17 +6,24 @@
     header("Access-Control-Max-Age: 3600");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-    require_once('artist.php');
+    require_once('track.php');
     require_once('../utility/sanitizer.php');
 
-    $artist = new Artist();
+    $track = new Track();
 
     $data = json_decode(file_get_contents("php://input"));
 
     if (isset($data->name)) {
         $name = sanitize_input($data->name);
+        $albumId = sanitize_input($data->albumId);
+        $mediaTypeId = sanitize_input($data->mediaTypeId);
+        $genreId = sanitize_input($data->genreId);
+        $composer = sanitize_input($data->composer);
+        $milliseconds = sanitize_input($data->milliseconds);
+        $bytes = sanitize_input($data->bytes);
+        $unitPrice = sanitize_input($data->unitPrice);
 
-        $result = $artist->createArtist($name);
+        $result = $track->createTrack($name, $albumId, $mediaTypeId, $genreId, $composer, $milliseconds, $bytes, $unitPrice);
 
         if ($result) {
             http_response_code(204);

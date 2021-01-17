@@ -9,6 +9,7 @@
     <!-- Scripts -->
     <script defer src="frontend/js/jquery-3.5.1.js"></script>
     <script defer src="frontend/js/bootstrap.js"></script>
+    <script defer src="frontend/js/loginscripts.js"></script>
     <script defer src="frontend/js/script.js"></script>
     <title>Track Provider</title>
 </head>

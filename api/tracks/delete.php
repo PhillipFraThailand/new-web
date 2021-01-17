@@ -3,17 +3,17 @@
     header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json; charset=UTF-8");
    
-    require_once('artist.php');
+    require_once('track.php');
     require_once('../utility/sanitizer.php');
 
-    $artist = new Artist();
+    $track = new Track();
 
     $data = json_decode(file_get_contents("php://input"));
 
     if ( isset($data->id) ) {
         $id = sanitize_input($data->id);
 
-        $result = $artist->deleteArtist($id);
+        $result = $track->deleteTrack($id);
 
         if ($result) {
             http_response_code(204);
