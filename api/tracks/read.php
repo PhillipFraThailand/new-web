@@ -13,6 +13,8 @@
     if (isset($_GET['page']) && ($_GET['page'] > 0)) {
         $page = sanitize_input((int)$_GET['page']);
         $offset = ($page * $limit -1);
+        // Make the next bage skip to end of DB for examn
+        // $offset = 3501;
     } else {
         $offset = 0;
     };

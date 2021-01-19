@@ -3,10 +3,13 @@ $(document).ready(function () {
     isAdmin = false;
     isSetupArtist = false;
 
-    // ARTISTS----------------------------
+    // ----------------------------ARTISTS----------------------------
     // Pagination
     $("#artists-nav").click(function () {
         $("#tracks-div").hide();
+        $('#albums-div').hide();
+        $('#cart-div').hide();
+        $('#account-div').hide();
         getArtists();
     });
 
@@ -110,11 +113,10 @@ $(document).ready(function () {
     });
 
     // update-btn submit
-    $("#updateName-submit").on('click', function (e) {
+    $("#updateName-submit").on('click', function () {
         let updateURL = './api/artists/update.php';
         let name = $("#update-inp").val().trim();
         let id = $("#artistId-inp").val().trim();
-
         if (name != "") {
             console.log(id, name)
 
@@ -156,7 +158,7 @@ $(document).ready(function () {
         $("#deleteArtist-modal").modal('hide');
     });
 
-    // delete-btn yes
+    // delete-btn submut
     $('#deleteArtist-yes').on('click', function () {
         let deleteUrl = './api/artists/delete.php'
         let id = $('#artistId-delInp').val().trim();
@@ -170,15 +172,13 @@ $(document).ready(function () {
             success: function (data) {
                 $('#deleteArtist-modal').modal('hide');
                 getArtists();
-
-
             },
             failure: function (errMsg) {
-                console.log('failure update');
+                console.log('failure delete');
             },
             error: function (e) {
-                console.log('error');
-                alert('Check possible constraint violations: no deletions were made');
+                console.log('error:',  e);
+                alert('Possible constraint violation. No deletions were made');
             }
         });
     });

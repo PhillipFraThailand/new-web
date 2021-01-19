@@ -19,7 +19,7 @@
             </nav>
     </div>
 
-    <!-- CREATE artist btn  -->
+    <!-- CREATE artist modal  -->
     <div class="modal fade" id="createArtist-modal" tabindex="-1">
         <div class="modal-dialog">  <!-- enables the sizing and closing -->
             <div class="modal-content">
@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <!-- UPDATE artist btn -->
+    <!-- UPDATE artist modal -->
     <div class="modal fade" id="updateArtist-modal" tabindex="-1">
         <div class="modal-dialog">  <!-- enables the sizing and closing -->
             <div class="modal-content">
@@ -79,7 +79,7 @@
         </div>
     </div>
 
-    <!-- DELETE artist btn -->
+    <!-- DELETE artist modal -->
     <div class="modal fade" id="deleteArtist-modal" tabindex="-1">
         <div class="modal-dialog">  <!-- enables the sizing and closing -->
             <div class="modal-content">
@@ -136,7 +136,7 @@
         </nav>
     </div>
 
-    <!-- CREATE track  -->
+    <!-- CREATE track modal -->
     <div class="modal fade" id="createTrack-modal" tabindex="-1">
         <div class="modal-dialog">  <!-- enables the sizing and closing -->
             <div class="modal-content">
@@ -148,28 +148,56 @@
 
                 <div class="modal-body">
                     <div class="form-group">
-                        <h5>New track</h5>
+                        <h6>Track Title</h6>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" id="trackName-inp" class="form-control" placeholder="Title" name="track-name" required="required">
+                        <input type="text" id="trackTitle-inp" class="form-control" placeholder="Title">
                     </div>
 
                     <div class="form-group">
-                        <input id="createTrack-yes" class="btn btn-success btn-block btn-lg" value="Create">
+                        <input type="text" id="trackAlbumId-inp" class="form-control" placeholder="AlbumId">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="MediaTypeId-inp" class="form-control" placeholder="MediaTypeId">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="trackGenreId-inp" class="form-control" placeholder="GenreId">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="trackComposer-inp" class="form-control" placeholder="Composer">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="trackMilliseconds-inp" class="form-control" placeholder="Milliseconds">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="trackBytes-inp" class="form-control" placeholder="Bytes">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="trackUnitPrice-inp" class="form-control" placeholder="unitPrice">
+                    </div>
+
+                    <div class="form-group">
+                        <input id="submitTrack" class="btn btn-success btn-block btn-lg" value="Create">
                     </div>
 
                 </div>
                 <div class="modal-footer">
                     <div class="clearfix">
-                        <button  id="createTrack-no" class="btn btn-warning btn-block btn-lg">Cancel</button>
+                        <button  id="createTrack-no" data-dismiss="modal"class="btn btn-warning btn-block btn-lg">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- DELETE track  -->
+    <!-- DELETE track modal -->
     <div class="modal fade" id="deleteTrack-modal" tabindex="-1">
         <div class="modal-dialog">  <!-- enables the sizing and closing -->
             <div class="modal-content">
@@ -181,11 +209,11 @@
 
                 <div class="modal-body">
                     <div class="form-group">
-                        <h5 id="confirm-delete-txt"></h5>
+                        <h5 id="confirm-delete-track"></h5>
                     </div>
 
                     <div class="form-group">
-                        <input id="deleteTrack-no" class="btn btn-warning btn-block btn-lg" value="No">
+                        <input id="deleteTrack-dismiss" data-dismiss="modal" class="btn btn-warning btn-block btn-lg" value="No">
                     </div>
 
                     <div class="form-group">
@@ -195,7 +223,51 @@
                 </div>
                 <div class="modal-footer">
                     <div class="clearfix">
-                        <button  id="deleteTrack-yes" class="btn btn-danger btn-block btn-lg">DELETE</button>
+                        <button  id="deleteTrack-confirm" class="btn btn-danger btn-block btn-lg">DELETE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- UPDATE track modal -->
+    <div class="modal fade" id="updateTrack-modal" tabindex="-1">
+        <div class="modal-dialog">  <!-- enables the sizing and closing -->
+            <div class="modal-content">
+                <!-- Header and close button -->
+                <div class="modal-header">
+                    <h5 class="modal-title">Update track</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <input type="text" id="trackTitleUpdate-inp" placeholder="Title" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="trackArtist-inp" placeholder="Artist" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="trackAlbum-inp" placeholder="Album" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="trackGenre-inp" placeholder="Genre" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="trackPrice-inp" placeholder="Price" class="form-control">
+                    </div>
+                  
+                    <div class="form-group">
+                        <input type="hidden" id="trackId-inp" class="form-control" required="required">
+                    </div>
+
+                    <div class="form-group">
+                        <input id="updateTrack-submit" class="btn btn-primary btn-block btn-lg" value="Submit">
                     </div>
                 </div>
             </div>
@@ -219,6 +291,5 @@
             <tbody id="album-body"></tbody>
         </table>
     </div>
-    <div id="albums-div"></div>
-    <div id="tracks-div"></div>
+
 </main>

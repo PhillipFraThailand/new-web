@@ -13,12 +13,16 @@
         function findUser($email) {
             // Query
             $query = <<<SQL
-                SELECT *
+                SELECT Address, City, Company, CustomerId, Email, Fax, FirstName, LastName, Phone, PostalCode, State, Country
                 FROM customer where Email = ?;
             SQL;
 
             // Prepare the statement
             $stmt = $this->pdo->prepare($query);
+
+            // run
+            // $stmt = $this->pdo->query($query);
+
 
             // execute the query which returns true on success and false on failure
             if ($stmt->execute([$email])) {
@@ -27,8 +31,12 @@
                 if($stmt->rowCount() === 0) {
                     return false;
                 } else {
-                    $row = $stmt->fetch();
-                    return $row;
+
+                    while($row = $stmt->fetch()) {
+                        $results[] = $row; 
+                    }
+                    // $row = $stmt->fetch();
+                    return $results;
                 }
             // if the query to db was a failure
             } else {
@@ -108,6 +116,9 @@
                             SELECT COUNT(*) AS total FROM customer WHERE email = ?;
                         SQL;
 
+                        // hash the new password
+                        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
                         //  prepare and execute the query. If its a success check count
                         $stmt = $this->pdo->prepare($query);
                         if( $stmt->execute([$newEmail]) ) {
@@ -118,7 +129,7 @@
                             } else {                                
                                 //  prepare and execute the query. If its a success check count
                                 $stmt = $this->pdo->prepare($updateQuery);
-                                if ($stmt->execute([$firstName, $lastName, $newPassword, $company, $address, $city, $state, $country, $postalCode, $phone, $fax, $newEmail, $oldEmail])) {
+                                if ($stmt->execute([$firstName, $lastName, $hashedPassword, $company, $address, $city, $state, $country, $postalCode, $phone, $fax, $newEmail, $oldEmail])) {
                                     $this->disconnect();
                                     return true;
 
@@ -137,8 +148,21 @@
                     // error checking user
                     echo('error checking user');
                 }
+            // dont have to check if email already exists
             } elseif ($oldEmail = $newEmail) {
-                // add user without checking email
+
+                $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+                $stmt = $this->pdo->prepare($updateQuery);
+                if ($stmt->execute([$firstName, $lastName, $hashedPassword, $company, $address, $city, $state, $country, $postalCode, $phone, $fax, $newEmail, $oldEmail])) {
+                    $this->disconnect();
+                    return true;
+
+                // if error in query execution
+                } else {
+                    $this->disconnect();
+                    return false;
+                }
 
             }
         }

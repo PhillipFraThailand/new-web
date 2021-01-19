@@ -4,6 +4,7 @@ $(document).ready(function () {
     $('#tracks-div').hide();
     $('#albums-div').hide();
     $('#cart-div').hide();
+    $('#account-div').hide();
 
     // HOME
     $('#home-nav').click(function () {

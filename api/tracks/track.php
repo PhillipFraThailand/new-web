@@ -15,16 +15,26 @@
                 INNER JOIN album AL ON T.AlbumId = AL.AlbumId
                 INNER JOIN artist A ON AL.ArtistId = A.ArtistId
                 INNER JOIN genre G ON T.GenreId = G.GenreId
+                ORDER BY trackId ASC
                 LIMIT $limit OFFSET $offset;
             QUERY;
 
             // Run query and save result in $stmt
+            // $stmt = $this->pdo->prepare($query);
+            
             $stmt = $this->pdo->query($query);
 
             // Add rows from statement to results
             while($row = $stmt->fetch()) {
                 $results[] = $row; 
             }
+
+            // --Possible solution to pagination--
+            // $stmt = $this->pdo->prepare("SELECT FOUND_ROWS()");
+            // $stmt->execute();
+            // $maxRows = $stmt->fetchColumn();
+            // $results['maxRows'] = $maxRows;
+            // array_push($result, $maxRows);
 
             // close connection
             $stmt = null;
@@ -60,24 +70,22 @@
 
         //delete track
         function deleteTrack($id){
-            try {
-                $query = <<<SQL
-                    DELETE FROM track WHERE TrackId = ?;
-                SQL;
-                $stmt = $this->pdo->prepare($query);
-                $result = $stmt->execute([$id]);
+            $query = <<<QUERY
+                DELETE FROM track 
+                WHERE TrackId = ?;
+            QUERY;
 
-                if($result){
-                    return true;
-                } else {
-                    return false;
-                }
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute([$id]);
 
-            } catch (PDOException $e) {
-                die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
-                exit();
+            $affectedRows = $stmt->rowCount();
+
+            if($affectedRows == 0) {
                 return false;
+            } else {
+                return true;
             }
+
         }
 
     }

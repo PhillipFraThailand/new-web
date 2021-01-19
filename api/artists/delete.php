@@ -24,6 +24,5 @@
     } else {
         http_response_code(400);
         echo('Try to post an id to be deleted');
-
     }
 ?>

@@ -1,8 +1,10 @@
 $(document).ready(function (){
     $('#cart-nav').on('click', function() {
         $('#artists-div').hide();
-        $('#tracks-div').hide();
         $('#albums-div').hide();
+        $('#cart-div').hide();
+        $('#tracks-div').hide();
+        $('#account-div').hide();
 
         setupCartsTable(products);
     });
@@ -10,18 +12,15 @@ $(document).ready(function (){
     // remove btn
     $('#cart-table').on('click','.remove-btn', function() {
         let index = this.getAttribute('index');
-        products.splice(index,1);
         let tRow = '';
+        products.splice(index,1);
         $("#cart-table").find("tbody").html(tRow);
         setupCartsTable(products)
-
-    })
+    });
 
     // Table setup
     function setupCartsTable(data) {
         let tRow = '';
-        let createBtn = `&nbsp <button id="create-btn" class="btn btn-success create-btn">Create tracks</button>`;
-        $('#tracks-table').find('#options-th').append(createBtn);
 
         data.forEach(e => {
             //get index for [] manipulation. expensive compared to incrementing i... but accounts for earlier deletions

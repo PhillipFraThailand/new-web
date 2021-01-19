@@ -16,6 +16,7 @@
         <script defer src="frontend/js/artistsScripts.js"></script>
         <script defer src="frontend/js/tracksScripts.js"></script>
         <script defer src="frontend/js/cartScripts.js"></script>
+        <script defer src="frontend/js/accountScripts.js"></script>
         <script defer src="frontend/js/script.js"></script>
 
         <title>Track Provider</title>

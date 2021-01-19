@@ -7,18 +7,18 @@ $("#signup-button").click(function() {
 $("#register-button").click(function() {
     signupURL = './api/user/create.php';
 
-    var firstName = $("#firstNameInp").val().trim();
-    var lastName = $("#lastNameInp").val().trim();
-    var password = $("#passwordInp").val().trim();
-    var company = $("#companyInp").val().trim();
-    var address = $("#addressInp").val().trim();
-    var city = $("#cityInp").val().trim();
-    var state = $("#stateInp").val().trim();
-    var country = $("#countryInp").val().trim();
-    var postalCode = $("#postalCodeInp").val().trim();
-    var phone = $("#phoneInp").val().trim();
-    var fax = $("#faxInp").val().trim();
-    var email = $("#emailInp").val().trim();
+    let firstName = $("#firstNameInp").val().trim();
+    let lastName = $("#lastNameInp").val().trim();
+    let password = $("#passwordInp").val().trim();
+    let company = $("#companyInp").val().trim();
+    let address = $("#addressInp").val().trim();
+    let city = $("#cityInp").val().trim();
+    let state = $("#stateInp").val().trim();
+    let country = $("#countryInp").val().trim();
+    let postalCode = $("#postalCodeInp").val().trim();
+    let phone = $("#phoneInp").val().trim();
+    let fax = $("#faxInp").val().trim();
+    let email = $("#emailInp").val().trim();
 
     $.ajax({
         url:signupURL,

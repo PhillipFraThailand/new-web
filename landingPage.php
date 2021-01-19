@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="modal-body">
-                <form> <!--- form to make required work --->
+                    <form> <!--- form to make required work --->
                     <!-- Input fields -->
                     <div class="form-group">
                         <input id="firstNameInp" type="text" class="form-control" placeholder="First name" name="firstName" required="required">
